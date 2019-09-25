@@ -4,6 +4,7 @@ const app  = express()
 const mongoose = require('mongoose')
 
 const port = process.env.HOSTING_PORT || 3000
+const usersRoute = require('./routes/usersRoute')
 
 // MongoDB init()
 require('dotenv/config')
@@ -20,10 +21,7 @@ const db_deprecation_object = {
 // Connect to databe
 mongoose.connect( db_connection_string, db_deprecation_object, ()=>console.log('Connected to db'))
 
-
-app.get('/', (req,res,next) => {
-    res.status(200).send('Responsed!')
-})
+app.use('/', usersRoute)
 
 // Port listening 3000
 app.listen(port, (port) => console.log(`Listening on port: ${port}`))
