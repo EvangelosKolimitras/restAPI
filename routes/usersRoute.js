@@ -2,25 +2,42 @@ const exprees = require('express')
 const router = exprees.Router()
 const User = require('../models/User')
 
-router
-    .get('/', (req, res, next) => {
-        res.status(200).json({
+router.get('/', (req, res, next) => {
+    res.json({
+        status: 200,
+        message: 'success',
+        url : req.url
+    })
+})
+
+router.get('/user', (req, res, next) => res.json({
+        status: 200,
+        message: 'success',
+        url : req.url,
+        data : req.query
+    })
+)
+
+router.post('/user/new', (req, res, next) => {
+    const user = new User({
+        name : req.body.name,
+        age : req.body.age,
+        date : req.body.date
+    })
+    user.save().then(user => {
+        res.json({
             status: 200,
             message: 'success',
-            data: [
-                {
-                    username: "evangelos",
-                    age: 28
-                }
-            ]
-
+            url : req.url,
+            user
         })
-    })
+    }).catch(error => res.json({
+        status: 200,
+        message: 'failed',
+        url : req.url,
+        errmsg: error.errmsg
+    }) )
 
-
-    .post('/new-user', (req, res, next) => {
-        console.log(req.body);
-        res.send(req.body)
-    })
+})
 
 module.exports = router
