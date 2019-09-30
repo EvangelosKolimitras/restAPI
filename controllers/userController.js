@@ -1,6 +1,6 @@
 
 const User = require( '../models/User' )
-const Joi = require( '@hapi/joi' )
+const validateData = require('../validator/validator')
 
 // Get Users
 exports.getUsers = async ( req , res , next ) => {
@@ -26,8 +26,6 @@ exports.getUsers = async ( req , res , next ) => {
 		console.log( error )
 
 	}
-
-
 }
 
 // Get User
@@ -56,7 +54,7 @@ exports.getUser = async ( req , res , next ) => {
 
 }
 
-// Delete Users
+// Delete User
 exports.deteleUser = async ( req , res , next ) => {
 
 	try{
@@ -117,20 +115,15 @@ exports.updateUser = async ( req , res , next ) => {
 
 }
 
+
+
 // Add Users
 exports.addUser = async ( req , res , next ) => {
 
-	const schema = Joi.object(
-		{
-			name     : Joi.string().required().min( 5 ) ,
-			email    : Joi.string().email().required() ,
-			password : Joi.string().required()
-		}
-	)
-
 	try {
 
-		const auth = await schema.validateAsync( req.body )
+		// Joi Validation
+		const auth = await validateData(req.body)
 
 		const user = new User({
 			name     : req.body.name ,
@@ -148,7 +141,7 @@ exports.addUser = async ( req , res , next ) => {
 		res.status( 200 ).json({
 			message : 'failed' ,
 			url     : req.url ,
-			errmsg  : error
+			error
 		})
 		console.log( error )
 
