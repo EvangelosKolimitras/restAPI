@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js || eslint --fix"
   },
   "keywords": [],
   "author": "Evangelos_Kolimitras <evangeloskolimitras@outlook.com>",
   "license": "ISC",
   "dependencies": {
+    "@hapi/joi": "^16.1.4",
     "chalk": "^2.4.2",
     "dotenv": "^8.1.0",
     "eslint": "^6.4.0",
