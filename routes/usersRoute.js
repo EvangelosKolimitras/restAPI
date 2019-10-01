@@ -1,6 +1,6 @@
 const exprees = require( 'express' )
 const router = exprees.Router()
-const {getUser , getUsers , addUser , updateUser , deteleUser} = require( '../controllers/userController' )
+const {registerUser , loginUser , getUser , getUsers , addUser , updateUser , deteleUser} = require( '../controllers/userController' )
 
 // Basic route
 router.get( '/' , ( req , res , next ) => {
@@ -24,6 +24,12 @@ router.get( '/' , ( req , res , next ) => {
 	}
 
 })
+
+// Register a user
+router.post( '/register' , registerUser )
+
+// Login a user
+router.post( '/login' , loginUser )
 
 // Get users 
 router.get( '/users' , getUsers )
