@@ -10,8 +10,8 @@ const UserSchema = mongoose.Schema({
 		unique : true
 	} ,
 	password : {
-		type : String,
-		required: [true, "A user should have a password"]
+		type     : String ,
+		required : [ true , 'A user should have a password' ]
 	} ,
 	date : {
 		type    : Date ,

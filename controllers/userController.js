@@ -2,6 +2,7 @@
 const User = require( '../models/User' )
 const {registerValidation , loginValidation} = require( '../validator/validator' )
 const bcrypt = require( 'bcryptjs' )
+const jwt = require( 'jsonwebtoken' )
 
 // COM: Get Users
 exports.getUsers = async ( req , res , next ) => {
@@ -201,11 +202,13 @@ exports.loginUser = async ( req , res , next ) => {
 	const user = await User.findOne({email : req.body.email})
 	if( !user ) return res.status( 400 ).send( 'User is not found' )
 
-	// ... => check for a matching password with his email
+	// ... => check for a matching password with his email => ...
 	const passwordIsValid = await bcrypt.compare( req.body.password , user.password )
 	if( !passwordIsValid ) return res.status( 400 ).send( 'Invalid password' )
 
-	res.send( 'Loged In' )
+	// ... => Token authorization after a user is loged in
+	const token = jwt.sign({user} , process.env.TOKEN )
+	res.header( 'Autchentication-Token' , token ).send( 'Loged In' ).json({data : token})
 
 }
 

@@ -3,6 +3,9 @@ const express = require( 'express' )
 const app = express()
 const mongoose = require( 'mongoose' )
 const dotenv = require( 'dotenv' )
+const morgan = require( 'morgan' )
+
+app.use( morgan( 'combined' ) )
 
 dotenv.config({path : `${__dirname}/.env`})
 
